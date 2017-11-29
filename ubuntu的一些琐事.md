@@ -40,5 +40,8 @@ vi /etc/sudoers
 # 下面的操作是将新增的用户增加sudo权限，然后删除默认创建的用户
 python3_1 ALL=(ALL) ALL
 # 保存
+reboot
+# 重启之后再以默认创建的用户登陆再到root用户权限，然后删除默认用户
 deluser nginx_miku
 ```
+操作完毕之后记得重启！
