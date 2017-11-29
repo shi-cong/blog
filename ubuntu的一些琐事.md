@@ -70,3 +70,5 @@ pip3 install PYSTUDY
 ```
 vi /etc/apt/source.list
 ```
+
+做运维真的很浪费时间。但是tmd连个软件的运行环境都搞不好，还想搞好编程？
