@@ -61,3 +61,12 @@ pip3 install PYSTUDY
 如果遇到了scrapy安装错误，先apt clean然后安装gcc.
 
 遇到了一个问题，不准备重装linux系统，这估计是官方的bug。
+
+## 如何查看ubuntu版本？
+* `cat /etc/issue`
+* `sudo lsb_release -a`
+
+## 如何更改ubuntu的默认源？
+```
+vi /etc/apt/source.list
+```
