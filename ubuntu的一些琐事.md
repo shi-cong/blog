@@ -25,3 +25,20 @@ hostname [新主机名]
 	/etc/hosts存放的是域名与ip的对应关系，域名与主机名没有任何关系，你可以为任何一个IP指定任意一个名字，hostname文件的一个例子：
 	127.0.0.1       localhost
 	127.0.1.1       v-jiwan-ubuntu
+
+操作完毕之后记得重启！
+
+## 如何删除用户并创建新用户？
+创建新用户
+```bash
+adduser python3_1
+```
+将用户增加到 sudoers file文件
+```bash
+vi /etc/sudoers
+# 增加一行
+# 下面的操作是将新增的用户增加sudo权限，然后删除默认创建的用户
+python3_1 ALL=(ALL) ALL
+# 保存
+deluser nginx_miku
+```
