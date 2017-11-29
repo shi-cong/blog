@@ -45,3 +45,19 @@ reboot
 deluser nginx_miku
 ```
 操作完毕之后记得重启！
+
+## 部署python3项目
+由于本人的所有的python库都是基于自己的PYSTUDY，所以，很大程度上，做api接口程序只用最好的，那么就是tornado，
+本人的数据库连接池也是自己写的，基本上不依赖于第三方的库，基本上，做开发的东西除了我的数据库连接池有点不靠谱，当然这个在我的爬虫系统中没有太大的问题，其它商业软件涉及支付的地方，我可能不会用自己设计的东西，到了商业
+软件的时候，我可能还是会走一些django这种大众的项目作为商业软件开发的基础。因为本人写的一些东西还没实际在生产环境使用过，所以，没有那个胆量。
+
+再者，我是极其讨厌centos系统的，所以本人的所有linux系统都是基于ubuntu的。由于在centos曾经有过惨痛经历，所以我选择了ubuntu。
+```bash
+apt update
+apt install python3-pip --fix-missing -y
+apt install python-dev libreadline-dev libssl-dev openssl libxml2 libxml2-dev -y
+pip3 install PYSTUDY
+```
+如果遇到了scrapy安装错误，先apt clean然后安装gcc.
+
+遇到了一个问题，不准备重装linux系统，这估计是官方的bug。
