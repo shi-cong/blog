@@ -250,3 +250,19 @@ mac 系统出现了 BlockingIOError: [Errno 36] Operation now in progress   这�
 
 1g内存，1核心cpu，1000个并发可以了。
 跑了接近10分钟，1000个连接渐渐的趋于稳定了，504也没了。
+
+最后再看下服务器的 cpu使用情况
+
+数据中心，60% cpu使用率 运行tornaod的服务。
+
+nginx毫无压力，2%
+
+amqp 1%
+
+mysql 72%
+
+说明这个架构是错误的，
+因为，amqp, nginx的利用率没有起来，cpu使用率最高的就是mysql和api服务。这里无法充分发挥
+消息队列的性能，而且，还增加了mysql的负载。
+
+不过，本人决定一错到底，决定优化。
