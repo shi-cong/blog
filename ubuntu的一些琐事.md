@@ -72,3 +72,105 @@ vi /etc/apt/source.list
 ```
 
 做运维真的很浪费时间。但是tmd连个软件的运行环境都搞不好，还想搞好编程？
+
+## ubuntu.16 和 ubuntu 17配置ip和网络管理上有很大的区别
+	ubuntu 17
+	系统安装完成之后默认是动态分配IP
+
+	liyaoyi@ubuntu:~$ ifconfig
+	ens32: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+		inet 192.168.209.221  netmask 255.255.255.0  broadcast 192.168.209.255
+		inet6 fe80::20c:29ff:fe9b:2437  prefixlen 64  scopeid 0x20<link>
+		ether 00:0c:29:9b:24:37  txqueuelen 1000  (Ethernet)
+		RX packets 632  bytes 78029 (78.0 KB)
+		RX errors 0  dropped 0  overruns 0  frame 0
+		TX packets 440  bytes 56139 (56.1 KB)
+		TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+		inet 127.0.0.1  netmask 255.0.0.0
+		inet6 ::1  prefixlen 128  scopeid 0x10<host>
+		loop  txqueuelen 1000  (Local Loopback)
+		RX packets 102  bytes 7728 (7.7 KB)
+		RX errors 0  dropped 0  overruns 0  frame 0
+		TX packets 102  bytes 7728 (7.7 KB)
+		TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+	之前的版本是在/etc/network/interfaces中修改,新版本使用/etc/netplan/*.yaml
+
+	liyaoyi@ubuntu:~$ cat /etc/netplan/01-netcfg.yaml
+	# This file describes the network interfaces available on your system
+	# For more information, see netplan(5).
+	network:
+	  version: 2
+	  renderer: networkd
+	  ethernets:
+	    ens32:
+	      dhcp4: yes
+	编辑YAML文件配置IP信息
+
+	liyaoyi@ubuntu:~$ sudo vim /etc/netplan/01-netcfg.yaml
+	# This file describes the network interfaces available on your system
+	# For more information, see netplan(5).
+	network:
+	  version: 2
+	  renderer: networkd
+	  ethernets:
+	    ens32:
+	      dhcp4: no
+	      dhcp6: no
+	      addresses: [192.168.209.221/24]
+	      gateway4: 192.168.209.2
+	      nameservers:
+		addresses: [8.8.8.8, 114.114.114.114]
+
+
+	执行命令让配置生效：
+
+	liyaoyi@ubuntu:~$ sudo netplan apply
+
+
+	显示debug信息
+
+	liyaoyi@ubuntu:~$ sudo netplan  --debug  apply
+	** (generate:2842): DEBUG: Processing input file //etc/netplan/01-netcfg.yaml..
+	** (generate:2842): DEBUG: starting new processing pass
+	** (generate:2842): DEBUG: ens32: setting default backend to 1
+	** (generate:2842): DEBUG: Generating output files..
+	** (generate:2842): DEBUG: NetworkManager: definition ens32 is not for us (backend 1)
+	DEBUG:netplan generated networkd configuration exists, restarting networkd
+	DEBUG:no netplan generated NM configuration exists
+	DEBUG:device ens32 operstate is up, not replugging
+	DEBUG:netplan triggering .link rules for ens32
+	DEBUG:device lo operstate is unknown, not replugging
+	DEBUG:netplan triggering .link rules for lo
+
+
+	netplan 其他参数指令：
+
+	netplan generate: 执行后使用 /etc/netplan 生成/run/systemd/network/10-netplan-ens32.network
+
+
+
+	netplan ifupdown-migrate: 尝试从/etc/network/interfaces转换成netplan需要的yaml格式,如果转换成功会禁止使用/etc/network/interfaces
+
+ubuntu 16
+	1、vi /etc/network/interfaces
+	添加内容：
+	auto eth0
+	iface eth0 inet static
+	address 192.168.8.100    
+	netmask 255.255.255.0
+	gateway 192.168.8.2
+	dns-nameserver 119.29.29.29
+
+	dns-nameserver 119.29.29.29这句一定需要有，
+	因为以前是DHCP解析，所以会自动分配DNS 服务器地址。
+	而一旦设置为静态IP后就没有自动获取到DNS服务器了，需要自己设置一个
+	设置完重启电脑后，/etc/resolv.conf 文件中会自动添加 nameserver 119.29.29.29
+	(或者nameserver 8.8.8.8)可以根据访问速度，选择合适的公共DNS 
+
+
+
+	2、重启网络：sudo /etc/init.d/networking restart
