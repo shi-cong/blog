@@ -249,3 +249,4 @@ mac 系统出现了 BlockingIOError: [Errno 36] Operation now in progress   这�
 不过比之前的情况要好了很多，毕竟这是低配置。
 
 1g内存，1核心cpu，1000个并发可以了。
+跑了接近10分钟，1000个连接渐渐的趋于稳定了，504也没了。
