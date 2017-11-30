@@ -158,7 +158,7 @@ ubuntu 17
 
 ubuntu 16
 
-	1、vi /etc/network/interfaces
+	vi /etc/network/interfaces
 	添加内容：
 	auto eth0
 	iface eth0 inet static
@@ -173,6 +173,4 @@ ubuntu 16
 	设置完重启电脑后，/etc/resolv.conf 文件中会自动添加 nameserver 119.29.29.29
 	(或者nameserver 8.8.8.8)可以根据访问速度，选择合适的公共DNS 
 
-
-
-	2、重启网络：sudo /etc/init.d/networking restart
+	重启网络：sudo /etc/init.d/networking restart
