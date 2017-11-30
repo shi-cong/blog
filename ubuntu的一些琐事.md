@@ -74,7 +74,8 @@ vi /etc/apt/source.list
 做运维真的很浪费时间。但是tmd连个软件的运行环境都搞不好，还想搞好编程？
 
 ## ubuntu.16 和 ubuntu 17配置ip和网络管理上有很大的区别
-	ubuntu 17
+ubuntu 17
+
 	系统安装完成之后默认是动态分配IP
 
 	liyaoyi@ubuntu:~$ ifconfig
@@ -156,6 +157,7 @@ vi /etc/apt/source.list
 	netplan ifupdown-migrate: 尝试从/etc/network/interfaces转换成netplan需要的yaml格式,如果转换成功会禁止使用/etc/network/interfaces
 
 ubuntu 16
+
 	1、vi /etc/network/interfaces
 	添加内容：
 	auto eth0
