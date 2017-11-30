@@ -138,7 +138,7 @@ python的异步有点不可靠，可能是人的不可靠。
 | 192.168.80.2 | 消息队列 | |
 | 192.168.80.4 | mysql主数据库| |
 | 192.168.80.6 | mysql从数据库| |
-| 192.168.80.10 | 数据中心服务 | 上面开了两个tornado进程 | 
+| 192.168.80.10 | 数据中心服务 | 上面开了两个tornado进程 |
 | 192.168.80.5 | redis缓存 | |
 | 192.168.80.9 | nginx网关 | |
 | 我的测试机器 | 用语做并发测试 | |
@@ -219,7 +219,7 @@ mac 系统出现了 BlockingIOError: [Errno 36] Operation now in progress   这�
 	原创 2014年03月06日 11:51:14 标签：socket /connect /Operation now in pro 9949
 	解决方法：
 	unsigned long ul = 1;
-	ioctl( sockfd, FIONBIO, &ul );  //设置为非阻塞模式 
+	ioctl( sockfd, FIONBIO, &ul );  //设置为非阻塞模式
 	放到connect()后面.
 
 那么requests如何用非柱塞的socket?
@@ -243,3 +243,9 @@ mac 系统出现了 BlockingIOError: [Errno 36] Operation now in progress   这�
 准备出去吃饭时看了一下，又504了。伤心了。
 
 改为1000，盯着，5分钟之后再出去。
+
+最终还是不能解决nginx -> 数据中心的504错误。
+
+不过比之前的情况要好了很多，毕竟这是低配置。
+
+1g内存，1核心cpu，1000个并发可以了。
