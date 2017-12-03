@@ -174,3 +174,6 @@ ubuntu 16
 	(或者nameserver 8.8.8.8)可以根据访问速度，选择合适的公共DNS 
 
 	重启网络：sudo /etc/init.d/networking restart
+
+## ubuntu 如何修改未登陆的终端提示?
+改不了，只能改登陆后的，具体配置文件/etc/issue
